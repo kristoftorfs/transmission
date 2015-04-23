@@ -23,7 +23,7 @@ abstract class Request {
     }
     final public function map($property, $reverse = false) {
         $src = ($reverse === true ? array_flip($this->_map) : $this->_map);
-        if (!array_key_exists($property, $this->_map)) return $property;
-        return $this->_map[$property];
+        if (!array_key_exists($property, $src)) return $property;
+        return $src[$property];
     }
 }
