@@ -1,0 +1,21 @@
+{
+  "name": "ktorfs/transmission-rpc",
+  "description": "PHP Transmission RPC client",
+  "keywords": ["transmission", "rpc", "client", "api", "torrent", "download"],
+  "version": "1.0.0-alpha",
+  "type": "library",
+  "license": "MIT",
+  "authors": [{
+      "name": "Kristof Torfs",
+      "email": "kristof@torfs.org"
+  }],
+  "require": {
+    "php": ">=5.4.0",
+    "kriswallsmith/buzz": ">=0.9"
+  },
+  "autoload": {
+    "psr-0": {
+      "Transmission": "src/"
+    }
+  }
+}
