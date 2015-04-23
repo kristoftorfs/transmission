@@ -105,7 +105,19 @@ final class Transmission {
     #endregion
     #region 4.5 Session shutdown: TODO
     #endregion
-    #region 4.6 Queue movement requests : TODO
+    #region 4.6 Queue movement requests
+    public function queueMoveTop(\Transmission\Requests\QueueMovement $request) {
+        return new Blank($this->call('queue-move-top', $request), $request);
+    }
+    public function queueMoveUp(\Transmission\Requests\QueueMovement $request) {
+        return new Blank($this->call('queue-move-up', $request), $request);
+    }
+    public function queueMoveDown(\Transmission\Requests\QueueMovement $request) {
+        return new Blank($this->call('queue-move-down', $request), $request);
+    }
+    public function queueMoveBottom(\Transmission\Requests\QueueMovement $request) {
+        return new Blank($this->call('queue-move-bottom', $request), $request);
+    }
     #endregion
     #region 4.7 Free space
     public function freeSpace(\Transmission\Requests\FreeSpace $request) {
