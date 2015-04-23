@@ -15,6 +15,8 @@ abstract class Request {
             if (is_null($value)) continue;
             $ret['arguments'][$this->map($property)] = $value;
         }
+        if (empty($ret['arguments'])) unset($ret['arguments']);
+        var_dump($ret);
         return json_encode($ret);
     }
     final public function setTag($_tag = null) {
