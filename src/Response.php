@@ -3,7 +3,6 @@
 namespace Transmission;
 
 abstract class Response {
-    private $error;
     protected $json;
     public function __construct($json, Request $request) {
         $this->json = $json;
