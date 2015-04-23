@@ -5,6 +5,7 @@ namespace Transmission;
 use Buzz\Client\Curl;
 use Buzz\Exception\RuntimeException;
 use Transmission\Responses\Blank;
+use Transmission\Responses\FreeSpace;
 use Transmission\Responses\TorrentAdd;
 
 /**
@@ -106,6 +107,9 @@ final class Transmission {
     #endregion
     #region 4.6 Queue movement requests : TODO
     #endregion
-    #region 4.7 Free space: TODO
+    #region 4.7 Free space
+    public function freeSpace(\Transmission\Requests\FreeSpace $request) {
+        return new FreeSpace($this->call('free-space', $request), $request);
+    }
     #endregion
 }
