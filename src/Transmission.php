@@ -53,8 +53,9 @@ final class Transmission {
         $this->port = $port;
         $this->path = $path;
     }
-    public function authenticate($username, $password) {
-        $this->auth = base64_encode(sprintf('%s:%s', $username, $password));
+    public function authenticate($username = null, $password = null) {
+        if (!empty($username) && !empty($password)) $this->auth = base64_encode(sprintf('%s:%s', $username, $password));
+        else $this->auth = null;
     }
     #region 3.1. Torrent actions
     public function torrentStart(\Transmission\Requests\TorrentAction $request) {
