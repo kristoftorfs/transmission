@@ -5,7 +5,10 @@ namespace Transmission;
 use Buzz\Client\Curl;
 use Buzz\Exception\RuntimeException;
 use Transmission\Responses\Blank;
+use Transmission\Responses\BlockListUpdate;
 use Transmission\Responses\FreeSpace;
+use Transmission\Responses\PortTest;
+use Transmission\Responses\SessionGet;
 use Transmission\Responses\TorrentAdd;
 
 /**
@@ -95,15 +98,30 @@ final class Transmission {
     #endregion
     #region 4.1.1 Session mutators: TODO
     #endregion
-    #region 4.1.2 Session accessors: TODO
+    #region 4.1.2 Session accessors
+    public function sessionGet() {
+        $request = new \Transmission\Requests\Blank();
+        return new SessionGet($this->call('session-get', $request), $request);
+    }
     #endregion
     #region 4.2 Session statistics: TODO
     #endregion
-    #region 4.3 Blocklist: TODO
+    #region 4.3 Blocklist
+    public function blockListUpdate() {
+        $request = new \Transmission\Requests\Blank();
+        return new BlockListUpdate($this->call('blocklist-update', $request), $request);
+    }
     #endregion
-    #region 4.4 Port checking: TODO
+    #region 4.4 Port checking: TODO (this doesn't work)
+    public function portTest(\Transmission\Requests\PortTest $request) {
+        return new PortTest($this->call('port-test', $request), $request);
+    }
     #endregion
-    #region 4.5 Session shutdown: TODO
+    #region 4.5 Session shutdown
+    public function sessionClose() {
+        $request = new \Transmission\Requests\Blank();
+        return new Blank($this->call('session-close', $request), $request);
+    }
     #endregion
     #region 4.6 Queue movement requests
     public function queueMoveTop(\Transmission\Requests\QueueMovement $request) {
