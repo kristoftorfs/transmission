@@ -95,7 +95,10 @@ final class Transmission {
         return new Blank($this->call('torrent-remove', $request), $request);
     }
     #endregion
-    #region 3.6 Move torrent: TODO
+    #region 3.6 Move torrent
+    public function torrentSetLocation(\Transmission\Requests\TorrentSetLocation $request) {
+        return new Blank($this->call('torrent-set-location', $request), $request);
+    }
     #endregion
     #region 3.7 Rename torrent file: TODO
     #endregion
