@@ -11,13 +11,11 @@ use Transmission\Responses\PortTest;
 use Transmission\Responses\SessionGet;
 use Transmission\Responses\SessionStats;
 use Transmission\Responses\TorrentAdd;
+use Transmission\Responses\TorrentGet;
 use Transmission\Responses\TorrentRenamePath;
 
 /**
  * Class Transmission
- *
- * The regions in this class are numbered as they can be found in the
- * [RPC specs](https://trac.transmissionbt.com/browser/trunk/extras/rpc-spec.txt).
  *
  * @package Transmission
  */
@@ -53,56 +51,128 @@ final class Transmission {
             throw new \Exception('Unable to connect to Transmission daemon', 0, $e);
         }
     }
+
+    /**
+     * @param string $host
+     * @param int $port
+     * @param string $path
+     */
     public function __construct($host = '127.0.0.1', $port = 9091, $path = '/transmission/rpc') {
         $this->client = new Curl();
         $this->host = $host;
         $this->port = $port;
         $this->path = $path;
     }
+
+    /**
+     * @param string $username
+     * @param string $password
+     */
     public function authenticate($username = null, $password = null) {
         if (!empty($username) && !empty($password)) $this->auth = base64_encode(sprintf('%s:%s', $username, $password));
         else $this->auth = null;
     }
-    #region 3.1. Torrent actions
+
+    /**
+     * @param Requests\TorrentAction $request
+     * @return Blank
+     * @throws \ErrorException
+     * @throws \Exception
+     */
     public function torrentStart(\Transmission\Requests\TorrentAction $request) {
         return new Blank($this->call('torrent-start', $request), $request);
     }
+
+    /**
+     * @param Requests\TorrentAction $request
+     * @return Blank
+     * @throws \ErrorException
+     * @throws \Exception
+     */
     public function torrentStartNow(\Transmission\Requests\TorrentAction $request) {
         return new Blank($this->call('torrent-start-now', $request), $request);
     }
+
+    /**
+     * @param Requests\TorrentAction $request
+     * @return Blank
+     * @throws \ErrorException
+     * @throws \Exception
+     */
     public function torrentStop(\Transmission\Requests\TorrentAction $request) {
         return new Blank($this->call('torrent-stop', $request), $request);
     }
+
+    /**
+     * @param Requests\TorrentAction $request
+     * @return Blank
+     * @throws \ErrorException
+     * @throws \Exception
+     */
     public function torrentVerify(\Transmission\Requests\TorrentAction $request) {
         return new Blank($this->call('torrent-verify', $request), $request);
     }
+
+    /**
+     * @param Requests\TorrentAction $request
+     * @return Blank
+     * @throws \ErrorException
+     * @throws \Exception
+     */
     public function torrentReannounce(\Transmission\Requests\TorrentAction $request) {
         return new Blank($this->call('torrent-reannounce', $request), $request);
     }
-    #endregion
-    #region 3.2 Torrent mutators
+
+    /**
+     * @param Requests\TorrentSet $request
+     * @return Blank
+     * @throws \ErrorException
+     * @throws \Exception
+     */
     public function torrentSet(\Transmission\Requests\TorrentSet $request) {
         return new Blank($this->call('torrent-set', $request), $request);
     }
-    #endregion
-    #region 3.3 Torrent accessors: TODO
-    #endregion
-    #region 3.4 Add torrent
+
+    /**
+     * @param Requests\TorrentGet $request
+     * @return TorrentGet
+     * @throws \ErrorException
+     * @throws \Exception
+     */
+    public function torrentGet(\Transmission\Requests\TorrentGet $request) {
+        return new TorrentGet($this->call('torrent-get', $request), $request);
+    }
+
+    /**
+     * @param Requests\TorrentAdd $request
+     * @return TorrentAdd
+     * @throws \ErrorException
+     * @throws \Exception
+     */
     public function torrentAdd(\Transmission\Requests\TorrentAdd $request) {
         return new TorrentAdd($this->call('torrent-add', $request), $request);
     }
-    #endregion
-    #region 3.5 Remove torrent
+
+    /**
+     * @param Requests\TorrentRemove $request
+     * @return Blank
+     * @throws \ErrorException
+     * @throws \Exception
+     */
     public function torrentRemove(\Transmission\Requests\TorrentRemove $request) {
         return new Blank($this->call('torrent-remove', $request), $request);
     }
-    #endregion
-    #region 3.6 Move torrent
+
+    /**
+     * @param Requests\TorrentSetLocation $request
+     * @return Blank
+     * @throws \ErrorException
+     * @throws \Exception
+     */
     public function torrentSetLocation(\Transmission\Requests\TorrentSetLocation $request) {
         return new Blank($this->call('torrent-set-location', $request), $request);
     }
-    #endregion
-    #region 3.7 Rename torrent file
+
     /**
      * Note that the request should only contain one torrent id.
      *
@@ -114,58 +184,114 @@ final class Transmission {
     public function torrentRenamePath(\Transmission\Requests\TorrentRenamePath $request) {
         return new TorrentRenamePath($this->call('torrent-rename-path', $request), $request);
     }
-    #endregion
-    #region 4.1.1 Session mutators
+
+    /**
+     * @param Requests\SessionSet $request
+     * @return Blank
+     * @throws \ErrorException
+     * @throws \Exception
+     */
     public function sessionSet(\Transmission\Requests\SessionSet $request) {
         return new Blank($this->call('session-set', $request), $request);
     }
-    #endregion
-    #region 4.1.2 Session accessors
+
+    /**
+     * @return SessionGet
+     * @throws \ErrorException
+     * @throws \Exception
+     */
     public function sessionGet() {
         $request = new \Transmission\Requests\Blank();
         return new SessionGet($this->call('session-get', $request), $request);
     }
-    #endregion
-    #region 4.2 Session statistics
+
+    /**
+     * @return SessionStats
+     * @throws \ErrorException
+     * @throws \Exception
+     */
     public function sessionStats() {
         $request = new \Transmission\Requests\Blank();
         return new SessionStats($this->call('session-stats', $request), $request);
     }
-    #endregion
-    #region 4.3 Blocklist
+
+    /**
+     * @return BlockListUpdate
+     * @throws \ErrorException
+     * @throws \Exception
+     */
     public function blockListUpdate() {
         $request = new \Transmission\Requests\Blank();
         return new BlockListUpdate($this->call('blocklist-update', $request), $request);
     }
-    #endregion
-    #region 4.4 Port checking: TODO (this doesn't work)
+
+    /**
+     * @param Requests\PortTest $request
+     * @return PortTest
+     * @throws \ErrorException
+     * @throws \Exception
+     */
     public function portTest(\Transmission\Requests\PortTest $request) {
         return new PortTest($this->call('port-test', $request), $request);
     }
-    #endregion
-    #region 4.5 Session shutdown
+
+    /**
+     * @return Blank
+     * @throws \ErrorException
+     * @throws \Exception
+     */
     public function sessionClose() {
         $request = new \Transmission\Requests\Blank();
         return new Blank($this->call('session-close', $request), $request);
     }
-    #endregion
-    #region 4.6 Queue movement requests
+
+    /**
+     * @param Requests\QueueMovement $request
+     * @return Blank
+     * @throws \ErrorException
+     * @throws \Exception
+     */
     public function queueMoveTop(\Transmission\Requests\QueueMovement $request) {
         return new Blank($this->call('queue-move-top', $request), $request);
     }
+
+    /**
+     * @param Requests\QueueMovement $request
+     * @return Blank
+     * @throws \ErrorException
+     * @throws \Exception
+     */
     public function queueMoveUp(\Transmission\Requests\QueueMovement $request) {
         return new Blank($this->call('queue-move-up', $request), $request);
     }
+
+    /**
+     * @param Requests\QueueMovement $request
+     * @return Blank
+     * @throws \ErrorException
+     * @throws \Exception
+     */
     public function queueMoveDown(\Transmission\Requests\QueueMovement $request) {
         return new Blank($this->call('queue-move-down', $request), $request);
     }
+
+    /**
+     * @param Requests\QueueMovement $request
+     * @return Blank
+     * @throws \ErrorException
+     * @throws \Exception
+     */
     public function queueMoveBottom(\Transmission\Requests\QueueMovement $request) {
         return new Blank($this->call('queue-move-bottom', $request), $request);
     }
-    #endregion
-    #region 4.7 Free space
+
+    /**
+     * @param Requests\FreeSpace $request
+     * @return FreeSpace
+     * @throws \ErrorException
+     * @throws \Exception
+     */
     public function freeSpace(\Transmission\Requests\FreeSpace $request) {
         return new FreeSpace($this->call('free-space', $request), $request);
     }
-    #endregion
 }
