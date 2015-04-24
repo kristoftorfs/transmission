@@ -7,7 +7,12 @@ abstract class Response {
     public function __construct($json, Request $request) {
         $this->json = $json;
         foreach($this->json['arguments'] as $property => $value) {
-            $property = $request->map($property, true);
+            if (property_exists($this, '_map')) {
+                $src = array_flip($this->_map);
+                if (array_key_exists($property, $src)) $property = $src[$property];
+            } else {
+                $property = $request->map($property, true);
+            }
             if (!property_exists($this, $property)) continue;
             $this->$property = $value;
         }
