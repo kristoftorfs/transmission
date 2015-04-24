@@ -9,6 +9,7 @@ use Transmission\Responses\BlockListUpdate;
 use Transmission\Responses\FreeSpace;
 use Transmission\Responses\PortTest;
 use Transmission\Responses\SessionGet;
+use Transmission\Responses\SessionStats;
 use Transmission\Responses\TorrentAdd;
 use Transmission\Responses\TorrentRenamePath;
 
@@ -122,7 +123,11 @@ final class Transmission {
         return new SessionGet($this->call('session-get', $request), $request);
     }
     #endregion
-    #region 4.2 Session statistics: TODO
+    #region 4.2 Session statistics
+    public function sessionStats() {
+        $request = new \Transmission\Requests\Blank();
+        return new SessionStats($this->call('session-stats', $request), $request);
+    }
     #endregion
     #region 4.3 Blocklist
     public function blockListUpdate() {
