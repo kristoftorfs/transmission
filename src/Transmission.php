@@ -90,7 +90,10 @@ final class Transmission {
         return new TorrentAdd($this->call('torrent-add', $request), $request);
     }
     #endregion
-    #region 3.5 Remove torrent: TODO
+    #region 3.5 Remove torrent
+    public function torrentRemove(\Transmission\Requests\TorrentRemove $request) {
+        return new Blank($this->call('torrent-remove', $request), $request);
+    }
     #endregion
     #region 3.6 Move torrent: TODO
     #endregion
