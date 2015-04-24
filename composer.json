@@ -2,7 +2,7 @@
   "name": "ktorfs/transmission-rpc",
   "description": "PHP 100% object-oriented Transmission RPC client. This library gives you code-completion for all requests and responses available from the Transmission daemon.",
   "keywords": ["transmission", "rpc", "client", "api", "torrent", "download"],
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "library",
   "license": "MIT",
   "authors": [{
