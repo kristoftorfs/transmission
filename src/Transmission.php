@@ -10,6 +10,7 @@ use Transmission\Responses\FreeSpace;
 use Transmission\Responses\PortTest;
 use Transmission\Responses\SessionGet;
 use Transmission\Responses\TorrentAdd;
+use Transmission\Responses\TorrentRenamePath;
 
 /**
  * Class Transmission
@@ -100,7 +101,18 @@ final class Transmission {
         return new Blank($this->call('torrent-set-location', $request), $request);
     }
     #endregion
-    #region 3.7 Rename torrent file: TODO
+    #region 3.7 Rename torrent file
+    /**
+     * Note that the request should only contain one torrent id.
+     *
+     * @param Requests\TorrentRenamePath $request
+     * @return TorrentRenamePath
+     * @throws \ErrorException
+     * @throws \Exception
+     */
+    public function torrentRenamePath(\Transmission\Requests\TorrentRenamePath $request) {
+        return new TorrentRenamePath($this->call('torrent-rename-path', $request), $request);
+    }
     #endregion
     #region 4.1.1 Session mutators: TODO
     #endregion
