@@ -5,6 +5,7 @@ namespace Transmission;
 abstract class Object {
     protected $_map = array();
     public function __construct($json) {
+        if (empty($json)) return;
         foreach($json as $property => $value) {
             $property = $this->map($property);
             if (!property_exists($this, $property)) continue;

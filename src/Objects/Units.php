@@ -16,25 +16,25 @@ class Units extends Object {
     /**
      * @var int Number of bytes in a KB (1000 for kB; 1024 for KiB)
      */
-    public $memoryBytes;
+    public $memoryBytes = 0;
     /**
      * @var string[] 4 strings: KB/s, MB/s, GB/s, TB/s
      */
-    public $memoryUnits;
+    public $memoryUnits = array();
     /**
      * @var int Number of bytes in a KB (1000 for kB; 1024 for KiB)
      */
-    public $sizeBytes;
+    public $sizeBytes = 0;
     /**
      * @var string[] 4 strings: KB/s, MB/s, GB/s, TB/s
      */
-    public $sizeUnits;
+    public $sizeUnits = array();
     /**
      * @var int Number of bytes in a KB (1000 for kB; 1024 for KiB)
      */
-    public $speedBytes;
+    public $speedBytes = 0;
     /**
      * @var string[] 4 strings: KB/s, MB/s, GB/s, TB/s
      */
-    public $speedUnits;
+    public $speedUnits = array();
 }

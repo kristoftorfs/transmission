@@ -115,7 +115,10 @@ final class Transmission {
         return new TorrentRenamePath($this->call('torrent-rename-path', $request), $request);
     }
     #endregion
-    #region 4.1.1 Session mutators: TODO
+    #region 4.1.1 Session mutators
+    public function sessionSet(\Transmission\Requests\SessionSet $request) {
+        return new Blank($this->call('session-set', $request), $request);
+    }
     #endregion
     #region 4.1.2 Session accessors
     public function sessionGet() {
